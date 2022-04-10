@@ -1,22 +1,41 @@
 package com.dsb.post.ui.posts
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.dsb.post.R
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.ExperimentalPagingApi
+import com.dsb.post.databinding.PostListFragmentBinding
+import com.dsb.post.ui.posts.adapter.PostAdapter
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
+@ExperimentalPagingApi
+@AndroidEntryPoint
 class PostListFragment : Fragment() {
-    private lateinit var viewModel: PostListViewModel
+    private val viewModel: PostListViewModel by viewModels()
+    private lateinit var binding: PostListFragmentBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.post_list_fragment, container, false)
+    private val adapter = PostAdapter()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = PostListFragmentBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[PostListViewModel::class.java]
+        binding.recyclerView.adapter = adapter
+
+        lifecycleScope.launch {
+            viewModel.posts.collectLatest { data ->
+                adapter.submitData(data)
+            }
+        }
     }
 }

@@ -18,7 +18,7 @@ class PostRepository @Inject constructor(
     }
 
     @ExperimentalPagingApi
-    suspend fun getPosts(): Flow<PagingData<Post>> {
+    fun getPosts(): Flow<PagingData<Post>> {
         val pagingSourceFactory = { database.userDao().getPost() }
 
         return Pager(

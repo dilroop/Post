@@ -1,12 +1,15 @@
 package com.dsb.post.di
 
-import com.dsb.post.data.ApiConstants
 import com.dsb.post.data.ApiConstants.API_BASE_PATH
 import com.dsb.post.data.PostApi
+import com.dsb.post.data.PostRepository
+import com.dsb.post.data.models.PostDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
@@ -46,7 +49,24 @@ internal object NetworkHiltModule {
 
     @Provides
     @Singleton
-    fun provideCatsApi(retrofit: Retrofit): PostApi {
+    fun providePostApi(retrofit: Retrofit): PostApi {
         return retrofit.create(PostApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun providePostRepository(api: PostApi, database: PostDatabase): PostRepository {
+        return PostRepository(api = api, database = database)
+    }
+
 }
+
+//@Module
+//@InstallIn(SingletonComponent::class)
+//object RepositoryModule {
+//    @Provides
+//    @Singleton
+//    fun providePostRepository(api: PostApi, database: PostDatabase): PostRepository {
+//        return PostRepository(api = api, database = database)
+//    }
+//}
