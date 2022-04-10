@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">Post</string>
+    <string name="app_name">Posty</string>
+    <string name="posts_screen_title">Your Posts</string>
 </resources>
