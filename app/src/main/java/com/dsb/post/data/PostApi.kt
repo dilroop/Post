@@ -1,10 +1,10 @@
 package com.dsb.post.data
 
+import com.dsb.post.model.Post
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface PostApi {
 
     @GET("posts")
-    suspend fun getPosts(): List<String>
+    suspend fun getPosts(): List<Post>
 }
