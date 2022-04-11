@@ -3,13 +3,11 @@ package com.dsb.post.di
 import com.dsb.post.data.ApiConstants.API_BASE_PATH
 import com.dsb.post.data.PostApi
 import com.dsb.post.data.PostRepository
-import com.dsb.post.data.models.PostDatabase
+import com.dsb.post.data.database.PostDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ViewModelComponent
-import dagger.hilt.android.scopes.ViewModelScoped
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json

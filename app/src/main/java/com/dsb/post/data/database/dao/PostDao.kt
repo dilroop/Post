@@ -1,6 +1,5 @@
-package com.dsb.post.data.models
+package com.dsb.post.data.database.dao
 
-import androidx.paging.PagingData
 import androidx.paging.PagingSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -16,4 +15,7 @@ interface PostDao {
 
     @Query("SELECT * FROM post_table")
     fun getPost(): PagingSource<Int, Post>
+
+    @Query("SELECT COUNT(*) FROM post_table")
+    suspend fun countPost(): Int
 }

@@ -1,29 +1,36 @@
-package com.dsb.post.data
+package com.dsb.post.data.database
 
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
+import com.dsb.post.data.PostApi
 import com.dsb.post.model.Post
-import com.dsb.post.data.models.PostDatabase
-import javax.inject.Inject
 
 @OptIn(ExperimentalPagingApi::class)
 class PostRemoteMediator(
     private val api: PostApi,
     private val database: PostDatabase
-): RemoteMediator<Int, Post>() {
+) : RemoteMediator<Int, Post>() {
+    companion object {
+        private const val MAX_REMOTE_POST = 100
+    }
+
     override suspend fun initialize(): InitializeAction {
-        return InitializeAction.LAUNCH_INITIAL_REFRESH
+        return InitializeAction.SKIP_INITIAL_REFRESH
     }
 
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Post>): MediatorResult {
         // As the api does not have paging we load everything once and save it in database.
+        if (database.postDao().countPost() >= MAX_REMOTE_POST) {
+            return MediatorResult.Success(endOfPaginationReached = true)
+        }
+
         return try {
             val posts = api.getPosts()
             database.withTransaction {
-                database.userDao().insertAll(posts = posts)
+                database.postDao().insertAll(posts = posts)
             }
             MediatorResult.Success(endOfPaginationReached = true)
         } catch (exception: Exception) {
