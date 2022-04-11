@@ -10,7 +10,11 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.ExperimentalPagingApi
 import com.dsb.post.databinding.PostListFragmentBinding
+import com.dsb.post.model.PostWithUser
+import com.dsb.post.ui.posts.PostListViewStateBinding.State
 import com.dsb.post.ui.posts.adapter.PostAdapter
+import com.dsb.post.ui.posts.adapter.PostViewHolder
+import com.dsb.post.ui.posts.adapter.decideOnState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -32,7 +36,20 @@ class PostListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.recyclerView.adapter = adapter
 
+        viewModel.binding.observe(viewLifecycleOwner) {
+            binding.viewState = it
+        }
+
         lifecycleScope.launch {
+            adapter.addLoadStateListener {
+                it.decideOnState(
+                    adapter,
+                    showLoading = { viewModel.setState(State.Loading)},
+                    showEmptyState = { viewModel.setState(State.Empty)},
+                    showError = { throwable -> viewModel.setState(State.Error(throwable))},
+                    showContent = { viewModel.setState(State.Content)},
+                )
+            }
             viewModel.posts.collectLatest { data ->
                 adapter.submitData(data)
             }

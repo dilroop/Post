@@ -15,11 +15,18 @@ import javax.inject.Inject
 @ExperimentalPagingApi
 @HiltViewModel
 class PostListViewModel @Inject constructor(
-    private val repository: PostRepository
+    private val repository: PostRepository,
+    viewStateBindingFactory: PostListViewStateBinding.Factory
 ) : ViewModel() {
+    private val viewStateBinding =  viewStateBindingFactory.create()
+    val binding = viewStateBinding.viewState
     val posts: Flow<PagingData<PostWithUser>> by lazy {
         datasource.cachedIn(viewModelScope)
     }
 
     private val datasource = repository.getPosts()
+
+    fun setState(state: PostListViewStateBinding.State) {
+        viewStateBinding.moveTo(state)
+    }
 }
