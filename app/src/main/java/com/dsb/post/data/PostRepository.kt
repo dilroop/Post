@@ -8,6 +8,7 @@ import com.dsb.post.data.database.PostDatabase
 import com.dsb.post.data.database.PostRemoteMediator
 import com.dsb.post.model.Comment
 import com.dsb.post.model.Post
+import com.dsb.post.model.PostWithUser
 import com.dsb.post.model.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -21,7 +22,7 @@ class PostRepository @Inject constructor(
     }
 
     @ExperimentalPagingApi
-    fun getPosts(): Flow<PagingData<Post>> {
+    fun getPosts(): Flow<PagingData<PostWithUser>> {
         return Pager(
             config = PagingConfig(
                 pageSize = PAGE_SIZE,
@@ -30,7 +31,7 @@ class PostRepository @Inject constructor(
             ),
             remoteMediator = PostRemoteMediator(api, database)
         ) {
-            database.postDao().getPost()
+            database.postDao().getPostWithUser()
         }.flow
     }
 
@@ -59,5 +60,4 @@ class PostRepository @Inject constructor(
     private fun getUserFromDatabase(userId: Int): User? {
         return database.userDao().getUserById(userId)
     }
-
 }

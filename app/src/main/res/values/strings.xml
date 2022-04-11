@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Posty</string>
     <string name="posts_screen_title">Your Posts</string>
+    <string name="posts_screen_by_author">By %s</string>
 </resources>

@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.dsb.post.data.PostRepository
 import com.dsb.post.model.Post
+import com.dsb.post.model.PostWithUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,7 +17,7 @@ import javax.inject.Inject
 class PostListViewModel @Inject constructor(
     private val repository: PostRepository
 ) : ViewModel() {
-    val posts: Flow<PagingData<Post>> by lazy {
+    val posts: Flow<PagingData<PostWithUser>> by lazy {
         datasource.cachedIn(viewModelScope)
     }
 

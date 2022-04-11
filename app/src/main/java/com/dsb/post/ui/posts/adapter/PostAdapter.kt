@@ -3,13 +3,13 @@ package com.dsb.post.ui.posts.adapter
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import com.dsb.post.model.Post
+import com.dsb.post.model.PostWithUser
 
-class PostAdapter : PagingDataAdapter<Post, PostViewHolder>(COMPARATOR) {
+class PostAdapter : PagingDataAdapter<PostWithUser, PostViewHolder>(COMPARATOR) {
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.setPost(post = it)
+            holder.setPostWithUser(data = it)
         }
     }
 
@@ -18,9 +18,12 @@ class PostAdapter : PagingDataAdapter<Post, PostViewHolder>(COMPARATOR) {
     }
 
     companion object {
-        private val COMPARATOR = object : DiffUtil.ItemCallback<Post>() {
-            override fun areItemsTheSame(oldItem: Post, newItem: Post) = oldItem.id == newItem.id
-            override fun areContentsTheSame(oldItem: Post, newItem: Post) = oldItem == newItem
+        private val COMPARATOR = object : DiffUtil.ItemCallback<PostWithUser>() {
+            override fun areItemsTheSame(oldItem: PostWithUser, newItem: PostWithUser): Boolean {
+                return oldItem.post.id == newItem.post.id && oldItem.user.id == newItem.user.id
+            }
+
+            override fun areContentsTheSame(oldItem: PostWithUser, newItem: PostWithUser) = oldItem == newItem
         }
     }
 }
