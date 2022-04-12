@@ -1,7 +1,6 @@
 package com.dsb.post.ui.details
 
 import com.dsb.post.model.Comment
-import com.dsb.post.model.PostWithUser
 
 data class PostDetailsViewState(
     val showLoading: Boolean,
@@ -13,5 +12,5 @@ data class PostDetailsViewState(
     val comments: List<Comment>
 ) {
     val showComments: Boolean = comments.isNotEmpty() && error == null
-    val showError: Boolean = error != null && comments.isEmpty()
+    val showError: Boolean = error != null
 }

@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.dsb.post.R
 import com.dsb.post.model.Comment
-import com.dsb.post.model.Post
 import com.dsb.post.model.PostWithUser
-import com.dsb.post.model.User
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject

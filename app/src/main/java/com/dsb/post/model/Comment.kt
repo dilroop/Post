@@ -14,5 +14,12 @@ data class Comment(
     @SerialName("body") val body: String
 ) {
     private fun getShortName(): String = name.split(" ").first()
-    fun getUserDetails(): String = "${getShortName()} ($email)"
+    fun getUserDetails(): String {
+        val shortName = getShortName()
+        return when {
+            shortName.isNotEmpty() && email.isNotEmpty() -> "${getShortName()} ($email)"
+            shortName.isEmpty() -> email
+            else -> shortName
+        }
+    }
 }

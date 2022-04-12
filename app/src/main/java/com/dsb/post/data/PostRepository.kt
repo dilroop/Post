@@ -7,9 +7,7 @@ import androidx.paging.PagingData
 import com.dsb.post.data.database.PostDatabase
 import com.dsb.post.data.database.PostRemoteMediator
 import com.dsb.post.model.Comment
-import com.dsb.post.model.Post
 import com.dsb.post.model.PostWithUser
-import com.dsb.post.model.User
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -43,21 +41,5 @@ class PostRepository @Inject constructor(
         } else {
             comments
         }
-    }
-
-    suspend fun fetchAndSaveUsersInLocalDatabase() {
-        val users = api.getAllUsers()
-        database.userDao().insertAll(users)
-    }
-
-    suspend fun getUserById(userId: Int): User {
-        val user = getUserFromDatabase(userId)
-        return user ?: api.getUserById(userId).also {
-            database.userDao().insertSingle(it)
-        }
-    }
-
-    private fun getUserFromDatabase(userId: Int): User? {
-        return database.userDao().getUserById(userId)
     }
 }

@@ -11,9 +11,6 @@ interface PostApi {
     @GET("posts")
     suspend fun getPosts(): List<Post>
 
-    @GET("users/{id}")
-    suspend fun getUserById(@Path("id") id: Int): User
-
     @GET("users")
     suspend fun getAllUsers(): List<User>
 

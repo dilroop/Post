@@ -13,7 +13,6 @@ import com.dsb.post.databinding.PostListFragmentBinding
 import com.dsb.post.model.PostWithUser
 import com.dsb.post.ui.posts.PostListViewStateBinding.State
 import com.dsb.post.ui.posts.adapter.PostAdapter
-import com.dsb.post.ui.posts.adapter.PostViewHolder
 import com.dsb.post.ui.posts.adapter.decideOnState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest

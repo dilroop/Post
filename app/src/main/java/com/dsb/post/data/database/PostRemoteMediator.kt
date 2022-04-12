@@ -6,7 +6,6 @@ import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.dsb.post.data.PostApi
-import com.dsb.post.model.Post
 import com.dsb.post.model.PostWithUser
 
 @OptIn(ExperimentalPagingApi::class)

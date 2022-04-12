@@ -2,8 +2,6 @@ package com.dsb.post.di
 
 import android.content.Context
 import android.content.res.Resources
-import androidx.room.Room
-import com.dsb.post.data.database.PostDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
