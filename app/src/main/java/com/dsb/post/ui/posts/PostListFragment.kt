@@ -25,7 +25,7 @@ class PostListFragment : Fragment() {
     private val viewModel: PostListViewModel by viewModels()
     private lateinit var binding: PostListFragmentBinding
 
-    private val adapter = PostAdapter { postId -> navigateToDetailScreen(postId) }
+    private val adapter = PostAdapter { postWithUser -> navigateToDetailScreen(postWithUser) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = PostListFragmentBinding.inflate(inflater)
@@ -56,9 +56,9 @@ class PostListFragment : Fragment() {
         }
     }
 
-    private fun navigateToDetailScreen(postId: Int) {
+    private fun navigateToDetailScreen(postWithUser: PostWithUser) {
         findNavController().navigate(
-            PostListFragmentDirections.navigateToDetailScreen(postId = postId)
+            PostListFragmentDirections.navigateToDetailScreen(postWithUser = postWithUser)
         )
     }
 }

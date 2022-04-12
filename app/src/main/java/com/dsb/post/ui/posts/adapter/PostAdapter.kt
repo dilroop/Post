@@ -5,11 +5,11 @@ import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.dsb.post.model.PostWithUser
 
-class PostAdapter(val onItemClick: (postId: Int) -> Unit) : PagingDataAdapter<PostWithUser, PostViewHolder>(COMPARATOR) {
+class PostAdapter(val onItemClick: (postWithUser: PostWithUser) -> Unit) : PagingDataAdapter<PostWithUser, PostViewHolder>(COMPARATOR) {
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         getItem(position)?.let { data ->
-            holder.itemView.setOnClickListener { onItemClick(data.post.id) }
+            holder.itemView.setOnClickListener { onItemClick(data) }
             holder.setPostWithUser(data = data)
         }
     }

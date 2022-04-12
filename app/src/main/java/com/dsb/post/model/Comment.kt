@@ -12,4 +12,7 @@ data class Comment(
     @SerialName("name") val name: String,
     @SerialName("email") val email: String,
     @SerialName("body") val body: String
-)
+) {
+    private fun getShortName(): String = name.split(" ").first()
+    fun getUserDetails(): String = "${getShortName()} ($email)"
+}
