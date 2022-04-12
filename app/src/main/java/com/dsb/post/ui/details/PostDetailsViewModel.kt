@@ -44,5 +44,5 @@ class PostDetailsViewModel @Inject constructor(
         }
     }
 
-    suspend fun setState(state: State) = withContext(Dispatchers.Main) { viewStateBinding.moveTo(state) }
+    private suspend fun setState(state: State) = withContext(Dispatchers.Main) { viewStateBinding.moveTo(state) }
 }
